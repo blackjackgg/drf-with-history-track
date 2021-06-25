@@ -230,5 +230,6 @@ rest_framework/utils/json.py
 rest_framework/utils/mediatypes.py
 rest_framework/utils/model_meta.py
 rest_framework/utils/representation.py
+rest_framework/utils/serdatajson.py
 rest_framework/utils/serializer_helpers.py
 rest_framework/utils/urls.py

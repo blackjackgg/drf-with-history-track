@@ -41,12 +41,13 @@ if sys.argv[-1] == 'publish':
 
 setup(
     name='drf-safe-jack',
-    version='3.9.9',
-    url='https://www.django-rest-framework.org/',
+    version='4.1.2',
+    url='https://github.com/blackjackgg/drf-with-history-track',
     license='BSD',
-    description=' drf修改put和delelte方法为post请求 原来的请求方法修改为 并在请求头加入method=put 或者method=delete 即可访问put的delete方法.',
+    description=' drf 基于api 设计的操作历史记录，drf post请求支持put，patch，delete方法',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
+      keywords="djangorestframework drf history django audit tracking  django api history  django action track ",
     author=' blackjack0v0',
     author_email='yihongwy1@163.com',  # SEE NOTE BELOW (*)
     packages=find_packages(exclude=['tests*']),

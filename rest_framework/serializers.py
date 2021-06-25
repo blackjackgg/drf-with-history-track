@@ -1000,6 +1000,8 @@ class ModelSerializer(Serializer):
                 field.set(value)
             else:
                 setattr(instance, attr, value)
+
+
         instance.save()
 
         # ser = self.__class__(instance)

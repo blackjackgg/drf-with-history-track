@@ -11,7 +11,9 @@ import json
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
+from rest_framework.utils.serdatajson import serdata2json
 from rest_framework.signals import api_created, api_updated
+import threading
 
 
 class CreateModelMixin(object):
@@ -20,9 +22,21 @@ class CreateModelMixin(object):
     """
 
     def create(self, request, *args, **kwargs):
+        print("request", request.META.get('CONTENT_TYPE'))
+        # request.data.pop("dataFile")
+        # request.data.pop("reportFile")
+        # rr = request.data.pop("reportFile")
+
+        # print("rr",rr[0:100])
+        print("requestdata", request.data)
+
         serializer = self.get_serializer(data=request.data)
+
+        print("here")
         serializer.is_valid(raise_exception=True)
+        print("here2")
         self.perform_create(serializer)
+        print("here3")
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -77,9 +91,25 @@ class UpdateModelMixin(object):
 
         ser = serializer.__class__(instance)
         try:
-            old_data = json.loads(json.dumps(dict(ser.data)))
-            api_updated.send(sender=serializer, old_data=old_data, new_data=request.data, instance=instance)
-        except:
+            import threading
+            import time
+            from track_actions.requestMiddleware import RequestMiddleware
+
+            current_request = RequestMiddleware.get_request_data()[1]
+            class SaveHisThread(threading.Thread):
+                def run(self):
+                    print "start.... %s" % (self.getName(),)
+                    old_data = serdata2json(ser.data)
+                    print("dangqianuser",current_request.user)
+                    api_updated.send(sender=serializer, current_request=current_request, old_data=old_data,
+                                     new_data=request.data, instance=instance)
+                    print "end.... %s" % (self.getName(),)
+
+            savehistory = SaveHisThread()
+            savehistory.start()
+
+        except Exception as e:
+            print(e)
             pass
 
         self.perform_update(serializer)
