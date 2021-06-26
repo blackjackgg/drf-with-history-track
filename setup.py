@@ -41,7 +41,7 @@ if sys.argv[-1] == 'publish':
 
 setup(
     name='drf-safe-jack',
-    version='4.1.2',
+    version='4.1.3',
     url='https://github.com/blackjackgg/drf-with-history-track',
     license='BSD',
     description=' drf 基于api 设计的操作历史记录，drf post请求支持put，patch，delete方法',

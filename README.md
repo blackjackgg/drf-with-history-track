@@ -12,7 +12,7 @@
 
 # 安装
 
-```js
+```shell
 pip install drf-safe-jack
 ```
 
@@ -22,7 +22,7 @@ pip install drf-safe-jack
 
 使用方式：在请求头header加入method 写入对应方法put或者patch等即可用post方法访问put等接口  
 
-```js
+```python
 method=put 
 ```
 
@@ -44,7 +44,7 @@ method=put
 
 使用方式：
 
-```
+```python
       #  settins.py
      INSTALLED_APPS = [
          ...,
@@ -62,3 +62,30 @@ method=put
 
     # 即可在 api/history 目录下获取到所有的历史记录
 ```
+
+
+
+# 记录返回内容
+
+```python
+   # 字段预览 
+            "table_name": "basic_basicrescue",  # 每个 api 里面对应的表名
+            "created_at": "2021-06-26T14:29:04.838753", # 操作日期
+            "instance_id": "424",   #实例id
+            "action": "由未填写更新为是",  # 操作内容
+            "field_name": "病人-发病时间",   # 中文的字段名
+            "user": 62   # 操作用户id
+            "user_obj": {  # 操作用户详情
+                "id": 62,
+                "username": "test_006",
+                "first_name": "王五",  #
+                "department": 
+             }
+```
+
+# 查找某个api对应的历史记录方法
+
+```python
+/api/history/?table_name=basic_basicrescue&instance_id=412  # tablename 为表名  instance_id为对应表的实例id
+```
+
